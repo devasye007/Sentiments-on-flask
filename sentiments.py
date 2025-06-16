@@ -18,3 +18,6 @@ def sentiment_score(text):
             "subjectivity": round(subjectivity, 2),
             "label": sentiment_label
         }
+'''
+
+# implement nltk version
