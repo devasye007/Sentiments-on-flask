@@ -1,23 +1,23 @@
-from textblob import TextBlob
+# sentiments.py
+from nltk.sentiment.vader import SentimentIntensityAnalyzer
 
-def sentiment_score(text):
-        blob = TextBlob(text)
-        polarity = blob.sentiment.polarity
-        subjectivity = blob.sentiment.subjectivity
+analyzer = SentimentIntensityAnalyzer()
 
+def analyze_sentiment(text):
+    scores = analyzer.polarity_scores(text)
 
-        if polarity >= 0.05:
-            sentiment_label = "It is a Positive text"
-        elif polarity <= -0.05:
-            sentiment_label = "It is a Negative text"
-        else:
-            sentiment_label = "It is a Neutral text"
+    compound = scores['compound']
+    if compound >= 0.05:
+        sentiment = "positive"
+    elif compound <= -0.05:
+        sentiment = "negative"
+    else:
+        sentiment = "neutral"
 
-        return {
-            "polarity" :round(polarity, 2),
-            "subjectivity": round(subjectivity, 2),
-            "label": sentiment_label
-        }
-'''
-
-# implement nltk version
+    return {
+        "sentiment": sentiment,
+        "compound": round(compound, 3),
+        "positive": scores['pos'],
+        "neutral": scores['neu'],
+        "negative": scores['neg']
+    }
